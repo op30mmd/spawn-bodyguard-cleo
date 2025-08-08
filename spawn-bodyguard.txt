@@ -5,7 +5,7 @@
 03A4: name_thread 'BDYGRD'
 
 // CONFIG
-4@ = 100     // Ped model ID (change if needed, e.g., 105 = #FAM1)
+4@ = 105     // Ped model ID (changed to #FAM1 to test for model-specific crash)
 5@ = 0x47    // G key to spawn
 6@ = 0x48    // H key to remove
 
