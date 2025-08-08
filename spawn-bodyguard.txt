@@ -48,7 +48,6 @@ jump @MAIN
 00A0: store_actor $PLAYER_CHAR position_to 1@ 2@ 7@
 1@ += 1.5
 2@ += 0.5
-02CE: 7@ = ground_z_at 1@ 2@ 7@
 
 0247: request_model 4@
 038B: load_requested_models
