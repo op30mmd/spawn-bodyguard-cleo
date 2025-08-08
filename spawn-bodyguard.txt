@@ -5,7 +5,7 @@
 03A4: name_thread 'BDYGRD'
 
 // CONFIG
-4@ = 105     // Ped model ID (changed to #FAM1 to test for model-specific crash)
+4@ = 100     // Ped model ID (change if needed, e.g., 105 = #FAM1)
 5@ = 0x47    // G key to spawn
 6@ = 0x48    // H key to remove
 
@@ -14,19 +14,15 @@
 
 :MAIN
 wait 0
-
 if
 0256:   player $PLAYER_CHAR defined
 then
     // === SPAWN BODYGUARD ===
-    if
+    if and
+    3@ == 0
     0AB0: key_pressed 5@
     then
-        if
-        3@ == 0
-        then
-            gosub @SPAWN_BODYGUARD
-        end
+        gosub @SPAWN_BODYGUARD
     end
 
     // === REMOVE BODYGUARD ===
@@ -37,7 +33,6 @@ then
         gosub @REMOVE_BODYGUARD
     end
 end
-
 jump @MAIN
 
 
@@ -48,6 +43,7 @@ jump @MAIN
 00A0: store_actor $PLAYER_CHAR position_to 1@ 2@ 7@
 1@ += 1.5
 2@ += 0.5
+02CE: 7@ = ground_z_at 1@ 2@ 7@
 
 0247: request_model 4@
 038B: load_requested_models
@@ -64,6 +60,30 @@ jump @WAITMODEL
 :MODEL_LOADED
 009A: 3@ = create_actor_pedtype 4 model 4@ at 1@ 2@ 7@
 0249: release_model 4@
+
+if
+056D: actor 3@ defined
+then
+    0223: set_actor 3@ health_to 400
+    01B2: give_actor 3@ weapon 22 ammo 300
+    01B9: set_actor 3@ armed_weapon_to 22
+
+    046D: 12@ = actor $PLAYER_CHAR members_in_group
+    if
+    12@ > 0
+    then
+        // Player already has a group, add bodyguard to it
+        07AF: 8@ = player $PLAYER_CHAR group
+        0631: put_actor 3@ in_group 8@
+    else
+        // Player has no group, create a new one
+        062F: 8@ = create_group_type 0
+        0630: put_actor $PLAYER_CHAR in_group 8@ as_leader
+        0631: put_actor 3@ in_group 8@
+    end
+else
+    3@ = 0
+end
 
 :WAIT_SPAWN_KEYUP
 wait 0
