@@ -57,21 +57,19 @@ jump @MAIN
 2@ += 0.5
 02CE: 7@ = ground_z_at 1@ 2@ 7@
 
-0E85: get_weaponinfo_models 22 store_to 9@ 10@ // weapon 22 = Colt 45
 0247: request_model 4@
-0247: request_model 9@
 038B: load_requested_models
 
 :WAITMODEL
 wait 0
-if and
+if not
     0248: model 4@ loaded
-    0248: model 9@ loaded
-jf @WAITMODEL
+then
+    jump @WAITMODEL
+end
 
 009A: 3@ = create_actor_pedtype 4 model 4@ at 1@ 2@ 7@
 0249: release_model 4@
-0249: release_model 9@
 
 if
 056D: actor 3@ defined
