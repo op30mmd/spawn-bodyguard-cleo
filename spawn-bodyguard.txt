@@ -3,7 +3,6 @@
 0000:
 
 03A4: name_thread 'BDYGRD'
-0A95: enable_thread_saving
 
 // CONFIG
 4@ = 100     // Ped model ID (change if needed, e.g., 105 = #FAM1)
@@ -12,6 +11,7 @@
 
 // STATE
 3@ = 0       // Bodyguard actor handle
+11@ = 0      // Init flag
 
 :MAIN
 wait 0
@@ -19,6 +19,12 @@ wait 0
 if
 0256:   player $PLAYER_CHAR defined
 then
+    if
+    11@ == 0
+    then
+        11@ = 1
+        0A95: enable_thread_saving
+    end
     // === SPAWN BODYGUARD ===
     if
     0AB0: key_pressed 5@
