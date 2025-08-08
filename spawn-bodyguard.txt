@@ -72,8 +72,20 @@ then
     0223: set_actor 3@ health_to 400
     01B2: give_actor 3@ weapon 22 ammo 300
     01B9: set_actor 3@ armed_weapon_to 22
-    07AF: 8@ = player $PLAYER_CHAR group
-    0631: put_actor 3@ in_group 8@
+
+    046D: 12@ = actor $PLAYER_CHAR members_in_group
+    if
+    12@ > 0
+    then
+        // Player already has a group, add bodyguard to it
+        07AF: 8@ = player $PLAYER_CHAR group
+        0631: put_actor 3@ in_group 8@
+    else
+        // Player has no group, create a new one
+        062F: 8@ = create_group_type 0
+        0630: put_actor $PLAYER_CHAR in_group 8@ as_leader
+        0631: put_actor 3@ in_group 8@
+    end
 else
     3@ = 0
 end
