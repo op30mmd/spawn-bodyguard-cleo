@@ -57,11 +57,11 @@ wait 0
 if
     0248: model 4@ loaded
 then
-    // model loaded, continue
-else
-    jump @WAITMODEL
+    goto @MODEL_LOADED
 end
+jump @WAITMODEL
 
+:MODEL_LOADED
 009A: 3@ = create_actor_pedtype 4 model 4@ at 1@ 2@ 7@
 0249: release_model 4@
 
