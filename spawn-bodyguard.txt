@@ -62,9 +62,11 @@ jump @MAIN
 
 :WAITMODEL
 wait 0
-if not
+if
     0248: model 4@ loaded
 then
+    // model loaded, continue
+else
     jump @WAITMODEL
 end
 
