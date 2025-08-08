@@ -1,4 +1,5 @@
 {$CLEO .cs}
+{$USE CLEO+}
 0000:
 
 03A4: name_thread 'BDYGRD'
